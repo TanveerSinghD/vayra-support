@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f23d4f">
+  <meta name="description" content="Official support and troubleshooting for the Vayra fitness app.">
+  <title>Vayra Support</title>
+  <style>
+    :root {
+      --accent: #f23d4f;
+      --accent-dark: #d9283d;
+      --canvas: #f2f2f7;
+      --surface: rgba(255, 255, 255, .94);
+      --control: #f2f2f7;
+      --text: #101014;
+      --muted: #68686f;
+      --line: rgba(0, 0, 0, .08);
+      --shadow: 0 14px 36px rgba(0, 0, 0, .08);
+      --green: #24b95f;
+      --yellow: #f5b71b;
+      --blue: #3488f4;
+      --purple: #7254d8;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --canvas: #08080a;
+        --surface: rgba(27, 27, 31, .96);
+        --control: #29292f;
+        --text: #f7f7fa;
+        --muted: #aaaab2;
+        --line: rgba(255, 255, 255, .14);
+        --shadow: 0 18px 44px rgba(0, 0, 0, .30);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% -10%, rgba(242, 61, 79, .16), transparent 31rem),
+        radial-gradient(circle at 96% 8%, rgba(52, 136, 244, .10), transparent 27rem),
+        var(--canvas);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "Segoe UI", sans-serif;
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; }
+    .shell { width: min(920px, calc(100% - 32px)); margin: 0 auto; }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 0;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 760; text-decoration: none; }
+    .logo {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      color: white;
+      background: linear-gradient(145deg, #ff5364, var(--accent-dark));
+      box-shadow: 0 8px 18px rgba(242, 61, 79, .26);
+    }
+    .logo svg { width: 22px; height: 22px; }
+    .nav-link { color: var(--muted); font-size: .93rem; font-weight: 650; text-decoration: none; }
+    .nav-link:hover { color: var(--accent); }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 58px 32px 38px;
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -9rem auto auto 50%;
+      width: 28rem;
+      height: 18rem;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(242, 61, 79, .18), transparent 68%);
+      pointer-events: none;
+    }
+    .hero-icon {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      color: white;
+      background: linear-gradient(145deg, #ff5969, #e52942);
+      box-shadow: 0 14px 28px rgba(242, 61, 79, .28);
+    }
+    .hero-icon svg { width: 39px; height: 39px; }
+    h1 { position: relative; margin: 0; font-size: clamp(2.05rem, 6vw, 3.4rem); letter-spacing: -.045em; line-height: 1.08; }
+    .subtitle { position: relative; max-width: 600px; margin: 14px auto 0; color: var(--muted); font-size: 1.05rem; }
+    .status {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 8px 12px;
+      color: var(--muted);
+      background: var(--control);
+      border-radius: 999px;
+      font-size: .83rem;
+      font-weight: 700;
+    }
+    .status-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(36, 185, 95, .13); }
+
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 28px; }
+    .card {
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .045);
+    }
+    .card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .symbol {
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 38px;
+      height: 38px;
+      color: white;
+      border-radius: 11px;
+      background: var(--accent);
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+    .symbol.blue { background: var(--blue); }
+    .symbol.green { background: var(--green); }
+    .symbol.purple { background: var(--purple); }
+    .card h2 { margin: 0; font-size: 1.05rem; letter-spacing: -.015em; }
+    .card p { margin: 0; color: var(--muted); font-size: .94rem; }
+    .section-title { margin: 48px 0 16px; font-size: 1.42rem; letter-spacing: -.025em; }
+
+    .faq { display: grid; gap: 12px; }
+    details {
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 7px 22px rgba(0, 0, 0, .035);
+    }
+    summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 20px;
+      cursor: pointer;
+      font-weight: 720;
+      list-style: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; color: var(--accent); font-size: 1.4rem; line-height: 1; transition: transform .18s ease; }
+    details[open] summary::after { transform: rotate(45deg); }
+    .answer { padding: 0 20px 20px; color: var(--muted); font-size: .94rem; }
+    .answer p { margin: 0 0 10px; }
+    .answer p:last-child { margin-bottom: 0; }
+    .answer ol { margin: 8px 0 0; padding-left: 1.3rem; }
+
+    .contact {
+      margin-top: 42px;
+      padding: 32px;
+      text-align: center;
+      color: white;
+      background: linear-gradient(140deg, #f23d4f, #d8203b);
+      border-radius: 26px;
+      box-shadow: 0 18px 36px rgba(242, 61, 79, .22);
+    }
+    .contact h2 { margin: 0; font-size: 1.55rem; }
+    .contact p { max-width: 570px; margin: 10px auto 20px; color: rgba(255, 255, 255, .84); }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 20px;
+      color: #d8203b;
+      background: white;
+      border-radius: 14px;
+      font-weight: 760;
+      text-decoration: none;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, .12);
+    }
+    .button:hover { transform: translateY(-1px); }
+    .fine-print { margin-top: 14px !important; font-size: .78rem; }
+
+    footer { padding: 34px 0 40px; color: var(--muted); text-align: center; font-size: .82rem; }
+    footer strong { color: var(--text); }
+
+    @media (max-width: 700px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero { padding: 44px 22px 30px; border-radius: 26px; }
+      .card, .contact { padding: 22px; }
+      .nav { padding: 16px 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="Vayra Support home">
+        <span class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 9.2 17 19 7"/></svg>
+        </span>
+        <span>Vayra Support</span>
+      </a>
+      <a class="nav-link" href="#contact">Contact support</a>
+    </nav>
+
+    <main id="top">
+      <header class="hero">
+        <div class="hero-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13.5a8 8 0 1 1 3.1 6.3L3 21l1.2-4.1A8 8 0 0 1 4 13.5Z"/><path d="M8.8 10.1a3.4 3.4 0 0 1 6.4 0c0 2.4-3.2 2.7-3.2 4.2"/><path d="M12 17.3h.01"/></svg>
+        </div>
+        <h1>How can we help?</h1>
+        <p class="subtitle">Quick answers for recording activities, route maps, Apple Health, accounts and privacy in Vayra.</p>
+        <div class="status"><span class="status-dot"></span> Support for Vayra 1.0</div>
+      </header>
+
+      <section class="grid" aria-label="Popular support topics">
+        <article class="card">
+          <div class="card-head"><span class="symbol">⌖</span><h2>Recording &amp; routes</h2></div>
+          <p>Start, pause and finish an activity, understand the live map, and improve GPS accuracy.</p>
+        </article>
+        <article class="card">
+          <div class="card-head"><span class="symbol blue">♥</span><h2>Apple Health</h2></div>
+          <p>Control workout imports, activity sharing and Health permissions from Settings.</p>
+        </article>
+        <article class="card">
+          <div class="card-head"><span class="symbol green">✓</span><h2>Account &amp; sync</h2></div>
+          <p>Sign in with Apple, manage your profile, export data or permanently delete your account.</p>
+        </article>
+        <article class="card">
+          <div class="card-head"><span class="symbol purple">◉</span><h2>Privacy &amp; visibility</h2></div>
+          <p>Choose who can view your activities and routes by using public or private account controls.</p>
+        </article>
+      </section>
+
+      <h2 class="section-title">Frequently asked questions</h2>
+      <section class="faq" aria-label="Frequently asked questions">
+        <details open>
+          <summary>Why is there no red route line while I am recording?</summary>
+          <div class="answer">
+            <p>This is intentional. The live map follows your current position and shows the starting point, while Vayra records the route in the background without repeatedly redrawing the full line.</p>
+            <p>After you finish, the completed route is drawn once in the activity summary. The green marker is the start and the yellow marker is the finish.</p>
+          </div>
+        </details>
+        <details>
+          <summary>How can I get the most accurate route?</summary>
+          <div class="answer">
+            <ol>
+              <li>Allow Precise Location for Vayra in iOS Settings.</li>
+              <li>Start outdoors with a clear view of the sky and wait briefly for the location marker to settle.</li>
+              <li>Keep Low Power Mode off when route accuracy is important.</li>
+              <li>For background recording, allow the location access requested by iOS.</li>
+            </ol>
+            <p>Dense buildings, tunnels, tree cover and poor satellite visibility can still reduce GPS accuracy.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Why has my distance stopped changing?</summary>
+          <div class="answer">
+            <p>Confirm the activity says “Recording” rather than “Paused.” Check that Precise Location is enabled and that Vayra still has location permission. Small movements may be ignored to prevent normal GPS drift from adding false distance.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Can Vayra keep recording when the screen is locked?</summary>
+          <div class="answer">
+            <p>Yes, when the appropriate location permission is granted. iOS can still delay or batch location updates depending on reception, battery conditions and system policy. Always confirm the recording state before putting the phone away.</p>
+          </div>
+        </details>
+        <details>
+          <summary>How do I connect or disconnect Apple Health?</summary>
+          <div class="answer">
+            <p>Open Vayra → Profile → Settings → Apple Health. You can choose which stats Vayra reads, whether completed workouts are imported, and whether Vayra writes completed activities to Health. Permissions can also be revoked in Apple’s Health or Settings apps.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Who can see my activities and route maps?</summary>
+          <div class="answer">
+            <p>With a public profile, signed-in users can see eligible activity posts and recorded routes. With a private profile, they are limited to approved followers. Blocked or otherwise unauthorized users cannot access the route preview or complete route.</p>
+          </div>
+        </details>
+        <details>
+          <summary>How do I export or delete my data?</summary>
+          <div class="answer">
+            <p>Open Vayra → Profile → Settings → Data &amp; Privacy to export your activities or remove activity history. Registered users can permanently delete their account and associated cloud data from Account settings.</p>
+          </div>
+        </details>
+        <details>
+          <summary>The app is not behaving correctly. What should I try?</summary>
+          <div class="answer">
+            <ol>
+              <li>Finish or pause any active recording safely.</li>
+              <li>Force-close Vayra and open it again.</li>
+              <li>Check your internet, location and Health permissions.</li>
+              <li>Restart the iPhone and install the latest Vayra and iOS updates.</li>
+            </ol>
+            <p>If it continues, send a support request with the steps that caused the problem, your Vayra version, iOS version and iPhone model.</p>
+          </div>
+        </details>
+      </section>
+
+      <section class="contact" id="contact">
+        <h2>Still need help?</h2>
+        <p>Open a support request and describe what happened. Include your app version, iOS version and device model when they are relevant.</p>
+        <a class="button" href="https://github.com/TanveerSinghD/vayra-support/issues/new" rel="noopener">Open a support request</a>
+        <p class="fine-print">GitHub issues are public. Never include passwords, authentication codes, exact routes, precise locations, Health data or other sensitive information.</p>
+      </section>
+    </main>
+
+    <footer>
+      <strong>Vayra</strong> · Move boldly. Keep every moment.<br>
+      Version 1.0 support
+    </footer>
+  </div>
+</body>
+</html>
